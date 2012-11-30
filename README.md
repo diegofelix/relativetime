@@ -6,12 +6,12 @@ Generate a relative time based on date or time passed.
 
 ## Installation
 
-** Run a bundle install **
+**Run a bundle install**
 ```php
 php artisan bundle:install relativetime
 ```
 
-** in application/bundles.php add 'relativetime' => array('auto' => true)
+**in application/bundles.php add 'relativetime' => array('auto' => true)**
 ```php
 return array(
 
