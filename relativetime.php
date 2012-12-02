@@ -1,11 +1,11 @@
 <?php
 
 /**
- * A class to return the relative time based on a 
+ * A class to return the relative time based on a
  * timestamp or string passed.
- * The class is based in a class made by Martin Angelov for 
+ * The class is based in a class made by Martin Angelov for
  * tutorialzine.com
- * 
+ *
  * example:
  * 		2 minutes ago
  *
@@ -17,32 +17,47 @@ class RelativeTime
 	private static $names = array('second','minute','hour','day','week','month','year');
 
 	// Time necessary to next time
-	private static $divisions = array(1,60,60,24,7,4.34,12); 
+	private static $divisions = array(1,60,60,24,7,4.34,12);
 
 	private static $time = NULL;
 
 	/**
 	 * Calculates the time based on a date passed
-	 * @param  string $timestr 
+	 * @param  string $timestr
 	 * @return string time passed.
 	 */
 	public static function get($timestr = null)
 	{
-		self::timestamp_from_string($timestr);
+		static::timestamp_from_string($timestr);
 
-		$time = self::$time;
+		$time = static::$time;
 		$name = "";
+		$negative = $time < 0;
+		$time = abs($time);
 
-		// If time is less than 10 seconds
-		// then return just now.
-		if ($time < 10) return "just now";
-
-		for($i = 0 ; $i < count(self::$divisions) ; $i++)
+		// If time is less than 10 seconds, we return "just now" if $time is positive
+		// or "in just a moment" if $time is negative
+		if ($time < 10)
 		{
-			if($time < self::$divisions[$i]) break;
+			if ($negative)
+			{
+				return "in just a moment";
+			}
+			else
+			{
+				return "just now";
+			}
+		}
+		//else construct the time string pieces
+		else
+		{
+			foreach (static::$divisions as $i => $division)
+			{
+				if($time < $division) break;
 
-			$time = $time / self::$divisions[$i];
-			$name = self::$names[$i];
+				$time = $time / $division;
+				$name = static::$names[$i];
+			}
 		}
 
 		$time = round($time);
@@ -52,31 +67,31 @@ class RelativeTime
 		if($time != 1)
 			$name.= 's';
 
-		return "$time $name ago";
+		return "$time $name " . ($negative ? 'from now' : 'ago');
 	}
 
 	/**
 	 * Substract and transform the time passed
-	 * 
+	 *
 	 * @param string/int $time variable to transform
-	 * @return int timestamp 
+	 * @return int timestamp
 	 */
 	private static function timestamp_from_string($time = null)
 	{
 		// a timestamp was passed
 		if(is_numeric($time))
 		{
-			self::$time = time() - $time;
+			static::$time = time() - $time;
 		}
 		// a string was passed
 		else if(is_string($time))
 		{
-			self::$time = time() - strtotime($time);
+			static::$time = time() - strtotime($time);
 		}
 
 		// nothing was passed
 		else
-			self::$time = 0;
+			static::$time = 0;
 	}
 }
 
