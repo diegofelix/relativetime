@@ -11,17 +11,16 @@ Generate a relative time based on date or time passed.
 php artisan bundle:install relativetime
 ```
 
-**in application/bundles.php add 'relativetime' => array('auto' => true)**
+**Register the bundle in application/bundles.php**
 ```php
 return array(
 
-	'docs' => array('handles' => 'docs'),
 	'relativetime' => array('auto' => true)
 
 );
 ```
 
-## Usage Example
+## Examples
 
 ```php
 
@@ -29,6 +28,8 @@ return array(
 
 echo RelativeTime::get(); // prints "just now"
 echo RelativeTime::get('2012-07-01'); // prints "3 months ago"
+echo RelativeTime::get('+15 seconds'); //prints "15 seconds from now"
+echo RelativeTime::get('2013-03-01'); //prints "3 months from now"
 // and so on
 ```
 
