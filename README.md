@@ -29,7 +29,7 @@ return array(
 echo RelativeTime::get(); // prints "just now"
 echo RelativeTime::get('2012-07-01'); // prints "3 months ago"
 echo RelativeTime::get('+15 seconds'); //prints "15 seconds from now"
-echo RelativeTime::get('2013-03-01'); //prints "3 months from now"
+echo RelativeTime::get('2013-03-01'); //prints "5 months from now"
 // and so on
 ```
 
