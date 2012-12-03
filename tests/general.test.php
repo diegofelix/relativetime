@@ -1,6 +1,6 @@
 <?php
 class TestGeneral extends PHPUnit_Framework_TestCase {
-    
+
     public function testRelativeTimeIsCreated()
     {
         Bundle::start('relativetime');
@@ -23,5 +23,32 @@ class TestGeneral extends PHPUnit_Framework_TestCase {
         $time = time() - 36000;
 
         $this->assertEquals(RelativeTime::get($time), '10 hours ago');
+    }
+
+    public function testRelativeTimeFutureTime5econds()
+    {
+        Bundle::start('relativetime');
+
+        $time = time() + 5;
+
+        $this->assertEquals(RelativeTime::get($time), 'in just a moment');
+    }
+
+    public function testRelativeTimeFutureTime15Seconds()
+    {
+        Bundle::start('relativetime');
+
+        $time = time() + 15;
+
+        $this->assertEquals(RelativeTime::get($time), '15 seconds from now');
+    }
+
+    public function testRelativeTimeFutureTime10Hours()
+    {
+        Bundle::start('relativetime');
+
+        $time = time() + 36000;
+
+        $this->assertEquals(RelativeTime::get($time), '10 hours from now');
     }
 }
